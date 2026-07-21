@@ -15,6 +15,7 @@ wallpapers.forEach(src => {
 // инициализация при загрузке
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.bg').style.backgroundImage = `url('${wallpapers[0]}')`;
+    initProjectsSlider();
 });
 
 function changeWallpaper(event) {
@@ -77,4 +78,72 @@ function copyText(event) {
     }).catch(err => {
         console.error('Ошибка при копировании: ', err);
     });
+}
+
+// Управление слайдером проектов
+let currentProjectsPage = 0;
+
+function initProjectsSlider() {
+    const track = document.querySelector('.projects-track');
+    const pages = document.querySelectorAll('.projects-page');
+    const dotsContainer = document.querySelector('.nav-dots');
+    
+    if (!track || pages.length === 0) return;
+    
+    // Динамически настраиваем ширину трека и страниц
+    track.style.width = `${pages.length * 100}%`;
+    pages.forEach(page => {
+        page.style.width = `${100 / pages.length}%`;
+    });
+    
+    // Генерируем точки пагинации на основе количества страниц
+    if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < pages.length; i++) {
+            const dot = document.createElement('span');
+            dot.className = `nav-dot${i === 0 ? ' active' : ''}`;
+            dot.addEventListener('click', () => setProjectsPage(i));
+            dotsContainer.appendChild(dot);
+        }
+    }
+    
+    updateProjectsSlider();
+}
+
+function updateProjectsSlider() {
+    const track = document.querySelector('.projects-track');
+    const pages = document.querySelectorAll('.projects-page');
+    const dots = document.querySelectorAll('.nav-dot');
+    
+    if (!track || pages.length === 0) return;
+    
+    const percentage = currentProjectsPage * (100 / pages.length);
+    track.style.transform = `translateX(-${percentage}%)`;
+    
+    dots.forEach((dot, idx) => {
+        if (idx === currentProjectsPage) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+function nextProjects() {
+    const pages = document.querySelectorAll('.projects-page');
+    if (pages.length === 0) return;
+    currentProjectsPage = (currentProjectsPage + 1) % pages.length;
+    updateProjectsSlider();
+}
+
+function prevProjects() {
+    const pages = document.querySelectorAll('.projects-page');
+    if (pages.length === 0) return;
+    currentProjectsPage = (currentProjectsPage - 1 + pages.length) % pages.length;
+    updateProjectsSlider();
+}
+
+function setProjectsPage(pageIndex) {
+    currentProjectsPage = pageIndex;
+    updateProjectsSlider();
 }

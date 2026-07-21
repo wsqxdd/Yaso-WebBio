@@ -266,6 +266,117 @@ body {
             text-decoration: underline;
         }
 
+/* Проекты с пагинацией */
+.project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.projects-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.projects-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+.projects-page {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-item {
+    display: block;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.2),
+                 0 0 15px rgba(255, 255, 255, 0.08);
+    transition: color 0.2s ease;
+}
+
+.project-item:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+.project-item.placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.project-item.placeholder:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.45);
+    cursor: default;
+}
+
+/* Навигация слайдера */
+.projects-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.nav-arrow {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.nav-arrow:hover {
+    color: #fff;
+}
+
+.nav-arrow:active {
+    transform: scale(0.9);
+}
+
+.nav-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+.nav-dot.active {
+    background: #fff;
+    width: 14px;
+    border-radius: 3px;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
 .about-section {
     text-align: left;
     margin-bottom: 50px;
