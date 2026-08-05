@@ -149,7 +149,7 @@ function setProjectsPage(pageIndex) {
     updateProjectsSlider();
 }
 
-// Система анимации частиц на фоновом Canvas с реакцией на мышь
+// Система анимации частиц на фоновом Canvas
 function initParticles() {
     const canvas = document.getElementById('particles');
     if (!canvas) return;
@@ -158,24 +158,12 @@ function initParticles() {
     let width = canvas.width = window.innerWidth;
     let height = canvas.height = window.innerHeight;
 
-    let mouse = { x: null, y: null, radius: 130 };
-
     window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
     });
 
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-    });
-
-    window.addEventListener('mouseleave', () => {
-        mouse.x = null;
-        mouse.y = null;
-    });
-
-    const particlesCount = 65;
+    const particlesCount = 50;
     const particles = [];
 
     class Particle {
@@ -195,27 +183,10 @@ function initParticles() {
         }
 
         update() {
-            // Обычное падение сверху вниз
             this.y += this.speedY;
             this.x += Math.sin(this.pulse) * 0.3 + this.speedX;
             this.pulse += this.pulseSpeed;
 
-            // Реакция отталкивания от курсора мыши
-            if (mouse.x !== null && mouse.y !== null) {
-                const dx = this.x - mouse.x;
-                const dy = this.y - mouse.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < mouse.radius) {
-                    const force = (mouse.radius - distance) / mouse.radius;
-                    const forceDirectionX = dx / distance;
-                    const forceDirectionY = dy / distance;
-                    this.x += forceDirectionX * force * 3.5;
-                    this.y += forceDirectionY * force * 3.5;
-                }
-            }
-
-            // Возврат наверх при выходе за границы
             if (this.y > height + 10 || this.x < -10 || this.x > width + 10) {
                 this.reset(false);
             }
@@ -224,22 +195,10 @@ function initParticles() {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            
-            // Если близко к мыши - чуть усиливаем свечение
-            let extraAlpha = 0;
-            if (mouse.x !== null && mouse.y !== null) {
-                const dx = this.x - mouse.x;
-                const dy = this.y - mouse.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < mouse.radius) {
-                    extraAlpha = (1 - dist / mouse.radius) * 0.4;
-                }
-            }
-
-            const currentAlpha = Math.min(1, this.alpha * (0.6 + Math.sin(this.pulse) * 0.4) + extraAlpha);
+            const currentAlpha = this.alpha * (0.6 + Math.sin(this.pulse) * 0.4);
             ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0.1, currentAlpha)})`;
-            ctx.shadowBlur = extraAlpha > 0 ? 10 : 6;
-            ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+            ctx.shadowBlur = 6;
+            ctx.shadowColor = 'rgba(255, 255, 255, 0.7)';
             ctx.fill();
             ctx.shadowBlur = 0;
         }
@@ -249,33 +208,12 @@ function initParticles() {
         particles.push(new Particle());
     }
 
-    function drawLines() {
-        if (mouse.x === null || mouse.y === null) return;
-        
-        particles.forEach(p => {
-            const dx = mouse.x - p.x;
-            const dy = mouse.y - p.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            
-            if (dist < 130) {
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(mouse.x, mouse.y);
-                const lineAlpha = (1 - dist / 130) * 0.35;
-                ctx.strokeStyle = `rgba(255, 255, 255, ${lineAlpha})`;
-                ctx.lineWidth = 0.8;
-                ctx.stroke();
-            }
-        });
-    }
-
     function animate() {
         ctx.clearRect(0, 0, width, height);
         particles.forEach(p => {
             p.update();
             p.draw();
         });
-        drawLines();
         requestAnimationFrame(animate);
     }
 
