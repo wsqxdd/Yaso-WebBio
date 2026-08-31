@@ -78,7 +78,7 @@ function copyText(event) {
     event.preventDefault();
 
     // Твой ник в Discord, который будет скопирован
-    const discordId = "pudgezzzz"; // Замени на свой актуальный ник, если нужно
+    const discordId = "ozymandis___"; // Замени на свой актуальный ник, если нужно
 
     // API для копирования текста в буфер обмена
     navigator.clipboard.writeText(discordId).then(() => {

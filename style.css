@@ -336,8 +336,22 @@ body {
     justify-content: center;
 }
 
-.project-item,
+/* Статичные надписи технологий (без ссылок и подчеркиваний) */
 .tech-item {
+    display: block;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.2),
+                 0 0 15px rgba(255, 255, 255, 0.08);
+    cursor: default;
+    user-select: text;
+}
+
+/* Ссылки на проекты (неоновая анимация без подчеркивания) */
+.project-item {
     display: block;
     width: 100%;
     color: rgba(255, 255, 255, 0.9);
@@ -347,25 +361,20 @@ body {
     text-align: center;
     text-shadow: 0 0 6px rgba(255, 255, 255, 0.2),
                  0 0 15px rgba(255, 255, 255, 0.08);
-    transition: color 0.2s ease;
+    transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
 }
 
-.project-item:hover,
-.tech-item:hover {
-    text-decoration: underline;
-    color: #fff;
+.project-item:hover {
+    color: #ffffff;
+    transform: scale(1.06);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 16px rgba(255, 255, 255, 0.35);
 }
 
 .project-item.placeholder,
 .tech-item.placeholder {
     color: rgba(255, 255, 255, 0.4);
-}
-
-.project-item.placeholder:hover,
-.tech-item.placeholder:hover {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.45);
-    cursor: default;
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* Навигация слайдера */
