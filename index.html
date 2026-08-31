@@ -15,18 +15,18 @@
     <div class="bg-next"></div>
     <canvas id="particles"></canvas>
 
-    <div>
-        <button class="changewallpaper" onclick="changeWallpaper(event)">❨</button>
-    </div>
+        <button class="changewallpaper" onclick="changeWallpaper(event)" aria-label="Change Wallpaper">
+            <img src="img/moon-svgrepo-com.svg" alt="Moon" class="moon-icon">
+        </button>
 
     <div class="profile-wrapper" style="position: relative; width: 100%;">        
         <div class="main-panel">
             
             <header class="profile-header">
                 <div class="profile-info">
-                    <img src="img/logo.jpg" alt="" class="avatar">
+                    <img src="https://github.com/wsqxdd.png" onerror="this.onerror=null; this.src='img/logo.jpg';" alt="Avatar" class="avatar">
                     <div class="user-details">
-                        <h1 style="color: rgba(255, 255, 255, 0.75); text-shadow: 0 0 6px rgba(255, 255, 255, 0.2), 0 0 15px rgba(255, 255, 255, 0.08);">Yaso_Su</h1>
+                        <h1 style="color: rgba(255, 255, 255, 0.75); text-shadow: 0 0 6px rgba(255, 255, 255, 0.2), 0 0 15px rgba(255, 255, 255, 0.08);">Wsqxdd</h1>
                         <span style="color: rgba(255, 255, 255, 0.75); text-shadow: 0 0 6px rgba(255, 255, 255, 0.2), 0 0 15px rgba(255, 255, 255, 0.08);">full-stack beginner</span>
                     </div>
                 </div>
@@ -67,10 +67,26 @@
                             <p>Python<br>Java-Script<br>C/C++</p>
                         </div>
                     </div>
-                    <div class="inner-card">
-                        <div class="card-title">Linux</div>
-                        <div class="card-content">
-                            <p>Advance Linux User<br><a title="BTW" style="text-decoration: none;">Arch</a>, Gentoo<br>Custom WM/DE</p>                        
+                    <div class="inner-card tech-card">
+                        <div class="card-title">Technology</div>
+                        <div class="tech-slider">
+                            <div class="tech-track">
+                                <div class="tech-page">
+                                    <span class="tech-item">Docker</span>
+                                    <span class="tech-item">MySQL</span>
+                                    <span class="tech-item">Linux</span>
+                                </div>
+                                <div class="tech-page">
+                                    <span class="tech-item">Prometheus</span>
+                                    <span class="tech-item">Grafana</span>
+                                    <span class="tech-item placeholder">&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tech-nav">
+                            <button class="nav-arrow prev-btn" onclick="prevTech()"><i class="fas fa-chevron-left"></i></button>
+                            <div class="tech-dots nav-dots"></div>
+                            <button class="nav-arrow next-btn" onclick="nextTech()"><i class="fas fa-chevron-right"></i></button>
                         </div>
                     </div>
                     <div class="inner-card project-card">
@@ -91,7 +107,7 @@
                         </div>
                         <div class="projects-nav">
                             <button class="nav-arrow prev-btn" onclick="prevProjects()"><i class="fas fa-chevron-left"></i></button>
-                            <div class="nav-dots"></div>
+                            <div class="projects-dots nav-dots"></div>
                             <button class="nav-arrow next-btn" onclick="nextProjects()"><i class="fas fa-chevron-right"></i></button>
                         </div>
                     </div>

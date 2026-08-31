@@ -16,8 +16,20 @@ wallpapers.forEach(src => {
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.bg').style.backgroundImage = `url('${wallpapers[0]}')`;
     initProjectsSlider();
+    initTechSlider();
     initParticles();
+    loadGitHubAvatar('wsqxdd');
 });
+
+function loadGitHubAvatar(username) {
+    const avatar = document.querySelector('.avatar');
+    if (avatar) {
+        avatar.src = `https://github.com/${username}.png`;
+        avatar.onerror = () => {
+            avatar.src = 'img/logo.jpg';
+        };
+    }
+}
 
 function changeWallpaper(event) {
     if (isAnimating) return;
@@ -87,7 +99,7 @@ let currentProjectsPage = 0;
 function initProjectsSlider() {
     const track = document.querySelector('.projects-track');
     const pages = document.querySelectorAll('.projects-page');
-    const dotsContainer = document.querySelector('.nav-dots');
+    const dotsContainer = document.querySelector('.projects-dots');
     
     if (!track || pages.length === 0) return;
     
@@ -114,7 +126,7 @@ function initProjectsSlider() {
 function updateProjectsSlider() {
     const track = document.querySelector('.projects-track');
     const pages = document.querySelectorAll('.projects-page');
-    const dots = document.querySelectorAll('.nav-dot');
+    const dots = document.querySelectorAll('.projects-dots .nav-dot');
     
     if (!track || pages.length === 0) return;
     
@@ -147,6 +159,72 @@ function prevProjects() {
 function setProjectsPage(pageIndex) {
     currentProjectsPage = pageIndex;
     updateProjectsSlider();
+}
+
+// Управление слайдером технологий
+let currentTechPage = 0;
+
+function initTechSlider() {
+    const track = document.querySelector('.tech-track');
+    const pages = document.querySelectorAll('.tech-page');
+    const dotsContainer = document.querySelector('.tech-dots');
+    
+    if (!track || pages.length === 0) return;
+    
+    track.style.width = `${pages.length * 100}%`;
+    pages.forEach(page => {
+        page.style.width = `${100 / pages.length}%`;
+    });
+    
+    if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < pages.length; i++) {
+            const dot = document.createElement('span');
+            dot.className = `nav-dot${i === 0 ? ' active' : ''}`;
+            dot.addEventListener('click', () => setTechPage(i));
+            dotsContainer.appendChild(dot);
+        }
+    }
+    
+    updateTechSlider();
+}
+
+function updateTechSlider() {
+    const track = document.querySelector('.tech-track');
+    const pages = document.querySelectorAll('.tech-page');
+    const dots = document.querySelectorAll('.tech-dots .nav-dot');
+    
+    if (!track || pages.length === 0) return;
+    
+    const percentage = currentTechPage * (100 / pages.length);
+    track.style.transform = `translateX(-${percentage}%)`;
+    
+    dots.forEach((dot, idx) => {
+        if (idx === currentTechPage) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+function nextTech() {
+    const pages = document.querySelectorAll('.tech-page');
+    if (pages.length === 0) return;
+    currentTechPage = (currentTechPage + 1) % pages.length;
+    updateTechSlider();
+}
+
+function prevTech() {
+    const pages = document.querySelectorAll('.tech-page');
+    if (pages.length === 0) return;
+    currentTechPage = (currentTechPage - 1 + pages.length) % pages.length;
+    updateTechSlider();
+}
+
+function setTechPage(pageIndex) {
+    currentTechPage = pageIndex;
+    updateTechSlider();
 }
 
 // Система анимации частиц на фоновом Canvas
