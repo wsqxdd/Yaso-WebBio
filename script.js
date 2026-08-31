@@ -22,12 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadGitHubAvatar(username) {
+    const avatarUrl = `https://github.com/${username}.png`;
     const avatar = document.querySelector('.avatar');
     if (avatar) {
-        avatar.src = `https://github.com/${username}.png`;
+        avatar.src = avatarUrl;
         avatar.onerror = () => {
             avatar.src = 'img/logo.jpg';
         };
+    }
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) {
+        favicon.href = avatarUrl;
     }
 }
 
